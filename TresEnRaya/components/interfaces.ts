@@ -15,6 +15,7 @@ export interface FormSubmission {
 export interface Project {
   id?: number;
   name: string;
+  owner: string; // Added Project Owner field
   fields: FormField[];
   submissions?: FormSubmission[];
 }

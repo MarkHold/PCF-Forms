@@ -16,6 +16,7 @@ export const App: React.FC = () => {
     {
       id: 1,
       name: "Sample Project",
+      owner: "Alice", // Added Project Owner
       fields: [
         { id: 1, label: "First Name", type: "text" },
         { id: 2, label: "Last Name", type: "text" },

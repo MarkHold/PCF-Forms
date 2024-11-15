@@ -16,14 +16,17 @@ export const FormComponent: React.FC<IFormComponentProps> = ({
   onCancel,
 }) => {
   const [name, setName] = useState("");
+  const [owner, setOwner] = useState(""); // State for Project Owner
   const [fields, setFields] = useState<FormField[]>([]);
 
   useEffect(() => {
     if (project) {
       setName(project.name);
+      setOwner(project.owner); // Set owner when editing
       setFields(project.fields);
     } else {
       setName("");
+      setOwner(""); // Reset owner when creating new project
       setFields([]);
     }
   }, [project]);
@@ -52,6 +55,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({
     const newProject: Project = {
       id: project?.id,
       name,
+      owner, // Include owner in the project data
       fields,
     };
     onSubmit(newProject);
@@ -74,9 +78,21 @@ export const FormComponent: React.FC<IFormComponentProps> = ({
           />
         </div>
 
+        <div className="form-field">
+          <label htmlFor="owner">Project Owner</label>
+          <input
+            type="text"
+            id="owner"
+            value={owner}
+            onChange={(e) => setOwner(e.target.value)}
+            placeholder="Enter Project Owner"
+            required
+          />
+        </div>
+
         <h2>Form Fields</h2>
         {fields.map((field) => (
-          <div key={field.id} className="form-field">
+          <div key={field.id} className="form-field field-row">
             <input
               type="text"
               value={field.label}
@@ -84,7 +100,11 @@ export const FormComponent: React.FC<IFormComponentProps> = ({
               placeholder="Enter Field Name"
               required
             />
-            <button type="button" onClick={() => removeField(field.id)}>
+            <button
+              type="button"
+              onClick={() => removeField(field.id)}
+              className="remove-field-button"
+            >
               Remove
             </button>
           </div>
